@@ -1,3 +1,0 @@
-uwsgi --ini mysite_uwsgi.ini
-
-curl -X GET http://127.0.0.1:8001/api/list/ -H 'Authorization: Token 11eb9a6d6eb93cc1430131f2c29d8870e23ca61a'
