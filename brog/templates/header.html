@@ -1,0 +1,64 @@
+{% load staticfiles %}
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">File storage project</a>
+
+            {% if request.user.is_authenticated %}
+                <a href=/{{ request.user.username }} class="navbar-brand">Домашняя директория</a>
+            {% endif %}
+
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+
+            {% if request.user.is_authenticated %}
+                <form class="navbar-form navbar-right" method="post" action="{% url 'account_logout' %}">
+                    {% csrf_token %}
+                    {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                    {% endif %}
+                    <button type="submit" class="btn btn-success">Выйти</button>
+                </form>
+
+                {% if request.user.first_name or request.user.last_name %}
+                    <p class="navbar-text navbar-right">Вы вошли как: <b
+                            style="color:white">{{ request.user.first_name }} {{ request.user.last_name }} token: {{ token }}</b></p>
+                {% else %}
+                    <p class="navbar-text navbar-right">Вы вошли как: <b
+                            style="color:white">{{ request.user.username }}</b>
+                        {% if not request.user.profile.account_verified %} (не подтвержден) token: {{ token }} {% endif %}</p>
+                {% endif %}
+
+            {% else %}
+                <form class="navbar-form navbar-right" method="POST" action="{% url 'account_login' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" placeholder="login" name="login" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="Password" name="password" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-success">Войти</button>
+                </form>
+                {% load socialaccount %}
+                <style> .navbar a.navbar-brand {
+                    width: auto;
+                    height: auto;
+                    padding: 0px;
+                    margin: 12px 20px;
+                }</style>
+                <a class="navbar-brand navbar-right" href="{% provider_login_url "vk" %}">
+                    <img alt="Brand" src="{% static "img/vk.png" %}">
+                </a>
+                <p class="navbar-text navbar-right" style="margin-right: 30px;">
+                    <a href="/accounts/signup/" class="navbar-link">Регистрация</a> |
+                    <a href="/accounts/password/reset/" class="navbar-link">Забыли пароль?</a>
+                </p>
+            {% endif %}
+
+        </div>
+        <!--/.navbar-collapse -->
+    </div>
+</nav>
+
+  

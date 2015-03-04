@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}Главная страница{% endblock %}
+
+
+{% block content %}
+
+      <!-- Jumbotron -->
+      <div class="jumbotron" style="background-color: #fff; text-align: center; ">
+        <h2>Держи свои файлы в надежном месте!</h2>
+        <p class="lead">Наш сервис предоставляет сотни гигабайт дискового пространства абсолютно бесплатно!</p>
+        <p><a class="btn btn-lg btn-success" href="#" role="button">Начать пользоваться сервисом</a></p>
+      </div>
+
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-lg-4">
+          <h2>Стабильность</h2>
+          <p>Наши сервера работают круглосуточно, каждый день, без перерывов и выходных. Поэтому в любое удобное для Вас время Вы можете получить доступ к любимым фильмам и
+          музыкальным композициям!</p>
+        </div>
+        <div class="col-lg-4">
+          <h2>Безопасность</h2>
+          <p>Мы гарантируем сохранность Ваших данных при любых обстоятельствах. Плановое резервирование и самые современные средства защиты позволяют
+          быть уверенным в том, что никто и ни при каких условиях не сможет получить доступ к Вашей информации без Вашего разрешения!</p>
+       </div>
+        <div class="col-lg-4">
+          <h2>Удобство</h2>
+          <p>Мы предлагаем самый удобный интерфейс для работы с файлами и каталогами! Простота и элегантность в реализации системы взаимодействия с пользователем
+          позволят Вам получать удовольствие от работы с нашим сервисом!</p>
+        </div>
+      </div>
+      
+      
+       <div class="jumbotron" style="background-color: #fff; text-align: center; margin-top: 30px;">
+        <h2>Более 100 000 человек по всему миру потльзуются нашим сервисом!</h2>
+        <p class="lead">Наш сервис предоставляет сотни гигабайт дискового пространства абсолютно бесплатно!</p>
+      </div>
+      
+      
+      
+      <div class="row">    
+          <div class="col-sm-2 col-md-3">
+            <div class="thumbnail">
+              <img src="{% static "img/people_two.jpg" %}" alt="...">
+              <div class="caption">
+                <h3>Сидоров Николай</h3>
+                <p>Быстрая скорость работы впечатляет!</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-sm-2 col-md-3">
+            <div class="thumbnail">
+              <img src="{% static "img/people_one.jpg" %}" alt="...">
+              <div class="caption">
+                <h3>Иванова Наталья</h3>
+                <p>Это самый лучший сайт в моей жизни!</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-sm-2 col-md-3">
+            <div class="thumbnail">
+              <img src="{% static "img/people_three.png" %}" alt="...">
+              <div class="caption">
+                <h3>Петров Иван</h3>
+                <p>Лучшее решение для моего бизнеса!</p>
+              </div>
+            </div>
+          </div> 
+          
+          <div class="col-sm-2 col-md-3">
+            <div class="thumbnail">
+              <img src="{% static "img/people_four.jpg" %}" alt="...">
+              <div class="caption">
+                <h3>Самсонов Евгений</h3>
+                <p>Все мои друзья пользуются вашим сервисом!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+{% endblock %}

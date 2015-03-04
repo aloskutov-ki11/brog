@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+{% block title %}Просмотр папок{% endblock %}
+{% block content %}
+
+{% if critical_error %}
+    <div class="alert alert-danger" role="alert">
+        {{ critical_error }}
+    </div>
+{% else %}
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == "error" %}
+                <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                </div>
+            {% else %}
+                <div class="alert alert-{{ message.tags }}" role="alert">
+                    {{ message }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <ol class="breadcrumb">
+        {% for dir in path_dirs %}
+            {% if not forloop.last %}
+                <li><a href="/{{ dir.full_path }}">{{ dir.name }}</a></li>
+            {% else %}
+                <li class="active">{{ dir.name }}</li>
+            {% endif %}
+        {% endfor %}
+    </ol>
+
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="tree well">
+                {% load mptt_tags %}
+                <ul>
+                    {% recursetree user_dirs %}
+                        <li>
+                             <span><i class="icon-folder-open"></i><a href="/{{ node.full_path }}">
+                                 {% if node == cur_dir %}
+                                     <strong>{{ node.name }}</strong>
+                                 {% else %}
+                                     {{ node.name }}
+                                 {% endif %}
+                             </a></span>
+                            {% if not node.is_leaf_node and cur_dir in node.get_descendants %}
+                                <ul>
+                                    {{ children }}
+                                </ul>
+                            {% endif %}
+                        </li>
+                    {% endrecursetree %}
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-7">
+            {% if file %}
+                <br> Вот ссылка:
+                <a href={{ file.my_file.url }} download>{{ file.name }}</a>
+                </br>
+            {% else %}
+                {% if parent %}
+                    <a href="/{{ cur_dur.parent.full_path }}">..(updir)</a><br>
+                {% endif %}
+
+
+
+                <div class="row">
+                    {% for dir in dirs %}
+                        <a class="list" href="{{ dir.name }}">
+                            <div class="col-sm-2 dirs">
+                                <p><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span></p>
+
+                                <p class="name">{{ dir.name }}</p>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+                <div class="row">
+                    {% for file in files %}
+                        <a class="list" href="/{{ file.full_path }}">
+                            <div class="col-sm-2 dirs">
+                                <p><span class="glyphicon glyphicon-file" aria-hidden="true"></span></p>
+
+                                <p class="name">{{ file.name }}</p>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+
+            {% endif %}
+        </div>
+
+        <div class="col-sm-3">
+            {% if not file %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Создание директории</h3>
+                    </div>
+                    <div class="panel-body">
+                        <p>Введите имя новой директории, которая будет создана внутри текущей</p>
+
+                        <form action="/create/dir/path={{ request.path }}" method="post">
+                            <p>{% csrf_token %}
+                                {{ CreateDirForm }}</p>
+                            <input type="submit" class="btn btn-success r_panel_btn" value="Создать директорию"/>
+                        </form>
+                    </div>
+                </div>
+
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Загрузка файла</h3>
+                    </div>
+                    <div class="panel-body">
+                        <p>Загрузка файла в текущую директорию</p>
+
+                        <form action="/upload/file/path={{ request.path }}" enctype="multipart/form-data" method="post">
+                            <p>{% csrf_token %}
+                                {{ UploadFileForm }}</p>
+                            <input type="submit" class="btn btn-success r_panel_btn" value="Загрузить файл"/>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Редактирование имени</h3>
+                    </div>
+                    <div class="panel-body">
+                        <p>Введите новое имя для текущей директории</p>
+
+                        <form action="/update/dir/path={{ request.path }}" method="post">
+                            <p>{% csrf_token %}
+                                {% for dir in path_dirs %}
+                                    {% if forloop.last %}
+                                        <input id="id_name" maxlength="256" name="name" type="text"
+                                               value="{{ dir.name }}">
+                                    {% endif %}
+                                {% endfor %}</p>
+                            <!--{{ UpdateDirectoryName }}-->
+                            <input type="submit" class="btn btn-success r_panel_btn" value="Переименовать"/>
+                        </form>
+                    </div>
+                </div>
+
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Удаление директории</h3>
+                    </div>
+                    <div class="panel-body">
+                        <p>Удаление текущей директории</p>
+
+                        <form action="/delete/dir/path={{ request.path }}" method="post">
+                            {% csrf_token %}
+                            <input type="submit" class="btn btn-success r_panel_btn"
+                                   value="Удалить текущую директорию"/>
+                        </form>
+                    </div>
+                </div>
+
+            {% endif %}
+        </div>
+    </div>
+{% endif %}
+{% endblock %}

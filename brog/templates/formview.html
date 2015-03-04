@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Просмотр папок{% endblock %}
+{% block content %}
+    <form action="/create/dir/path={{ parent }}" method="post">
+        <p>{% csrf_token %}
+            {{ form }}</p>
+        <input type="submit" class="btn btn-success r_panel_btn" value="Создать директорию"/>
+    </form>
+{% endblock %}

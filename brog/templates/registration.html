@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}Регистрация нового пользователя{% endblock %}
+
+
+{% block content %}
+
+</br> </br>      
+<div class="container">
+
+<form class="form-horizontal" action='' method="POST">
+  <fieldset>
+    <div id="legend">
+      <legend class="">Регистрация нового пользователя</legend>
+    </div>
+    
+    {% if 1 %}
+        <div class="alert alert-danger" role="alert">
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+          <span class="sr-only">Ошибка:</span>
+          Введите корректный email адрес
+        </div>
+    {% endif %}
+     
+    <div class="control-group">
+      <!-- Username -->
+      <label class="control-label"  for="username">Имя</label>
+      <div class="controls">
+        <input type="text" class="input-xlarge"  id="username" name="username" placeholder="">
+        <p class="help-block">Имя должно содержать только буквы</p>
+      </div>
+    </div>
+    
+    <div class="control-group">
+      <!-- Usernamesecond -->
+      <label class="control-label"  for="username">Фамилия</label>
+      <div class="controls">
+        <input type="text" class="input-xlarge"  id="username_second" name="username_second" placeholder="">
+        <p class="help-block">Фамилия должна содержать только буквы</p>
+      </div>
+    </div>
+ 
+    <div class="control-group">
+      <!-- E-mail -->
+      <label class="control-label" for="email">E-mail</label>
+      <div class="controls">
+        <input type="text" id="email" name="email" placeholder="" class="input-xlarge">
+        <p class="help-block">Введите свой E-mail</p>
+      </div>
+    </div>
+ 
+    <div class="control-group">
+      <!-- Password-->
+      <label class="control-label" for="password">Пароль</label>
+      <div class="controls">
+        <input type="password" id="password" name="password" placeholder="" class="input-xlarge">
+        <p class="help-block">Пароль должен быть более 4-х символов</p>
+      </div>
+    </div>
+ 
+    <div class="control-group">
+      <!-- Password -->
+      <label class="control-label"  for="password_confirm">Пароль (еще раз)</label>
+      <div class="controls">
+        <input type="password" id="password_confirm" name="password_confirm" placeholder="" class="input-xlarge">
+        <p class="help-block">Повторите пароль</p>
+      </div>
+    </div>
+ 
+    <div class="control-group">
+      <!-- Button -->
+      <div class="controls">
+        <button class="btn btn-success">Зарегистрироваться</button>
+      </div>
+    </div>
+  </fieldset>
+</form>
+
+</div>
+
+{% endblock %}
